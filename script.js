@@ -26,8 +26,8 @@ async function drawMap() {
 
 	// 2. Create chart dimensions
 	
-	const width = 1440;
-	const height = 900;
+	const width = 1280;
+	const height = 800;
 
 	// 3. Draw canvas
 	
@@ -45,6 +45,8 @@ async function drawMap() {
 		.domain([10, 20, 30, 40, 50,])
 		.range(["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]);
 
+	const projection = d3.geoIdentity().fitSize([width, height], usGeoJson);
+
 	// 5. Draw data
 	
 	const counties = canvas.append("g")
@@ -53,7 +55,7 @@ async function drawMap() {
 		.enter()
 		.append("path")
 		.attr("class", "county")
-		.attr("d", d => d3.geoPath()(d))
+		.attr("d", d => d3.geoPath(projection)(d))
 		.attr("fill", d => colorScale(fipsBreakDown[idAccessor(d).toString()]["edu"]));
 
 }
