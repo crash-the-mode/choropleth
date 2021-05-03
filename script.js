@@ -120,6 +120,32 @@ async function drawMap() {
 		.attr("y", 75)
 		.attr("id", "description")
 		.style("text-anchor", "middle");
+
+	// 7. Set up interactions
+
+	map.selectAll(".county")
+		.on("mouseenter", onMouseEnter)
+		.on("mouseleave", onMouseLeave);
+
+	const tooltip = d3.select("#tooltip");
+
+	function onMouseEnter(e, datum) {
+//		console.log({e, datum});
+		const [centerX, centerY] = d3.geoPath(projection).centroid(datum);
+//		console.log({centerX, centerY});
+		const x = centerX;
+		const y = centerY + marginTop;
+		const {state, county, edu} = fipsBreakDown[idAccessor(datum).toString()];
+		tooltip.select("#data-edu")
+			.text(`${county}, ${state}: ${edu}%`);
+		tooltip.style("transform", `translate(calc(5% + ${x}px), calc(-100% + ${y}px))`);
+		tooltip.attr("data-education", edu);
+		tooltip.style("opacity", 1);
+	}
+	function onMouseLeave(e, datum) {
+		tooltip.style("opacity", 0);
+	}
+
 }
 
 drawMap();
