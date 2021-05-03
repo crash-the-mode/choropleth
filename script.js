@@ -27,7 +27,9 @@ async function drawMap() {
 	// 2. Create chart dimensions
 	
 	const width = 1280;
-	const height = 800;
+	const height = 850;
+	const marginTop = 50;
+	const mapHeight = height - marginTop;
 
 	// 3. Draw canvas
 	
@@ -35,6 +37,9 @@ async function drawMap() {
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height);
+
+	const map = canvas.append("g")
+		.style("transform", `translateY(${marginTop}px)`);
 
 	// 4. Create scales
 	
@@ -45,11 +50,11 @@ async function drawMap() {
 		.domain([10, 20, 30, 40, 50,])
 		.range(["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]);
 
-	const projection = d3.geoIdentity().fitSize([width, height], usGeoJson);
+	const projection = d3.geoIdentity().fitSize([width, mapHeight], usGeoJson);
 
 	// 5. Draw data
 	
-	const counties = canvas.append("g")
+	const counties = map.append("g")
 		.selectAll("path")
 		.data(usGeoJson.features)
 		.enter()
@@ -60,7 +65,7 @@ async function drawMap() {
 		.attr("data-fips", d => idAccessor(d))
 		.attr("data-education", d => fipsBreakDown[idAccessor(d).toString()]["edu"]);
 
-	const stateBorders = canvas.append("path")
+	const stateBorders = map.append("path")
 		.datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
 		.attr("fill", "none")
 		.attr("stroke", "white")
@@ -68,7 +73,7 @@ async function drawMap() {
 
 	// 6. Draw peripherals
 
-	const legendGroup = canvas.append("g")
+	const legendGroup = map.append("g")
 		.attr("id", "legend")
 		.style("transform", `translate(900px, 60px)`);
 
