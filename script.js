@@ -6,7 +6,7 @@ async function drawMap() {
 	const dataset = await d3.json("https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json");
 //	console.log(us);
 	
-	const usGeoJson = topojson.feature(us, us.objects.counties).features;
+	const usGeoJson = topojson.feature(us, us.objects.counties);
 	console.log(usGeoJson);
 
 	const idAccessor = d => d.id;
@@ -49,7 +49,7 @@ async function drawMap() {
 	
 	const counties = canvas.append("g")
 		.selectAll("path")
-		.data(usGeoJson)
+		.data(usGeoJson.features)
 		.enter()
 		.append("path")
 		.attr("class", "county")
