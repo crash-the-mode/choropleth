@@ -56,7 +56,11 @@ async function drawMap() {
 		.append("path")
 		.attr("class", "county")
 		.attr("d", d => d3.geoPath(projection)(d))
-		.attr("fill", d => colorScale(fipsBreakDown[idAccessor(d).toString()]["edu"]));
+		.attr("fill", d => colorScale(fipsBreakDown[idAccessor(d).toString()]["edu"]))
+		.attr("data-fips", d => idAccessor(d))
+		.attr("data-education", d => fipsBreakDown[idAccessor(d).toString()]["edu"]);
+
+	// 6. Draw peripherals
 
 }
 
