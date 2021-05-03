@@ -4,15 +4,15 @@ async function drawMap() {
 	
 	const us = await d3.json("https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json");
 	const dataset = await d3.json("https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json");
-	console.log(us);
+//	console.log(us);
 	
 	const usGeoJson = topojson.feature(us, us.objects.counties);
-	console.log(usGeoJson);
+//	console.log(usGeoJson);
 
 	const idAccessor = d => d.id;
 //	console.log(idAccessor(usGeoJson.features[1]))
 	const eduAccessor = d => d.bachelorsOrHigher;
-	console.log(dataset);
+//	console.log(dataset);
 
 	let fipsBreakDown = {};
 	dataset.forEach(d  => {
@@ -22,7 +22,7 @@ async function drawMap() {
 			"edu": eduAccessor(d),
 		}; 
 	});
-	console.log(fipsBreakDown["1003"]);
+//	console.log(fipsBreakDown["1003"]);
 
 	// 2. Create chart dimensions
 	
