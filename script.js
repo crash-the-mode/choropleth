@@ -4,7 +4,7 @@ async function drawMap() {
 	
 	const us = await d3.json("https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json");
 	const dataset = await d3.json("https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json");
-//	console.log(us);
+	console.log(us);
 	
 	const usGeoJson = topojson.feature(us, us.objects.counties);
 	console.log(usGeoJson);
@@ -59,6 +59,12 @@ async function drawMap() {
 		.attr("fill", d => colorScale(fipsBreakDown[idAccessor(d).toString()]["edu"]))
 		.attr("data-fips", d => idAccessor(d))
 		.attr("data-education", d => fipsBreakDown[idAccessor(d).toString()]["edu"]);
+
+	const stateBorders = canvas.append("path")
+		.datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+		.attr("fill", "none")
+		.attr("stroke", "white")
+		.attr("d", d => d3.geoPath(projection)(d));
 
 	// 6. Draw peripherals
 
