@@ -75,9 +75,9 @@ async function drawMap() {
 
 	const legendGroup = map.append("g")
 		.attr("id", "legend")
-		.style("transform", `translate(925px, 60px)`);
+		.style("transform", `translate(950px, 40px)`);
 
-	const legendWidth = 240;
+	const legendWidth = 180;
 	const colorLength = colorScale.range().length;
 	const legendScale = d3.scaleLinear()
 		.domain([1, colorLength - 1])
@@ -105,7 +105,8 @@ async function drawMap() {
 
 	const legendText = legendGroup.append("text")
 		.text("Bachelor's degree or higher (%)")
-		.attr("y", -5);
+		.attr("y", -5)
+		.style("font-size", "0.75em");
 
 	const title = canvas.append("text")
 		.text("United States Education Attainment")
