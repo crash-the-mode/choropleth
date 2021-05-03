@@ -68,6 +68,36 @@ async function drawMap() {
 
 	// 6. Draw peripherals
 
+	const legendGroup = canvas.append("g")
+		.attr("id", "legend")
+		.style("transform", `translate(900px, 60px)`);
+
+	const legendWidth = 240;
+	const colorLength = colorScale.range().length;
+	const legendScale = d3.scaleLinear()
+		.domain([1, colorLength - 1])
+		.rangeRound([legendWidth / colorLength, legendWidth - (legendWidth / colorLength)]);
+
+	const legendRects = legendGroup.selectAll("rect")
+		.data(colorScale.range())
+		.enter()
+		.append("rect")
+		.attr("x", (d, i) => legendScale(i))
+		.attr("width", legendWidth / colorLength)
+		.attr("height", legendWidth / colorLength)
+		.attr("fill", d => d);
+
+	const legendLabelGroup = legendGroup.append("g");
+
+	const legendLabel = d3.axisBottom()
+		.scale(legendScale)
+		.tickValues(d3.range(1, colorLength))
+		.tickFormat(i => colorScale.domain()[i - 1])
+		.tickSize(10);
+
+	const legend = legendLabelGroup.call(legendLabel)
+		.style("transform", `translateY(${legendWidth / colorLength - 1}px)`);
+
 }
 
 drawMap();
