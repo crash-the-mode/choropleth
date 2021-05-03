@@ -75,7 +75,7 @@ async function drawMap() {
 
 	const legendGroup = map.append("g")
 		.attr("id", "legend")
-		.style("transform", `translate(900px, 60px)`);
+		.style("transform", `translate(925px, 60px)`);
 
 	const legendWidth = 240;
 	const colorLength = colorScale.range().length;
@@ -103,6 +103,23 @@ async function drawMap() {
 	const legend = legendLabelGroup.call(legendLabel)
 		.style("transform", `translateY(${legendWidth / colorLength - 1}px)`);
 
+	const legendText = legendGroup.append("text")
+		.text("Bachelor's degree or higher (%)")
+		.attr("y", -5);
+
+	const title = canvas.append("text")
+		.text("United States Education Attainment")
+		.attr("x", width / 2)
+		.attr("y", 50)
+		.attr("id", "title")
+		.style("text-anchor", "middle");
+
+	const description = canvas.append("text")
+		.text("Adults age 25 with bachelor's or higher from 2010 - 2014 at the county level")
+		.attr("x", width / 2)
+		.attr("y", 75)
+		.attr("id", "description")
+		.style("text-anchor", "middle");
 }
 
 drawMap();
