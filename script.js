@@ -109,7 +109,7 @@ async function drawMap() {
 		.style("font-size", "0.75em");
 
 	const title = canvas.append("text")
-		.text("United States Education Attainment")
+		.text("United States Educational Attainment")
 		.attr("x", width / 2)
 		.attr("y", 50)
 		.attr("id", "title")
